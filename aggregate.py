@@ -15,7 +15,7 @@ def make_pipeline():
                             "skills_list": {"$addToSet":"$skills"},
                             "count": {"$sum": 1}
                 }},
-                {"$sort": {"_id": 1 }},
+                {"$sort": {"count": -1 }},
                 {"$limit" : 50}
                 ]
     return pipeline
@@ -31,10 +31,12 @@ if __name__ == '__main__':
     res = [] 
     for r in result:
         a = r["_id"]
+        b = r["count"]
         res.append(a)
+        print("{a}({b})".format(a=a, b=b))
     print(len(res))
     
     import pprint
-    pprint.pprint(res)
+    #pprint.pprint(res)
     
 
