@@ -12,10 +12,11 @@ def make_pipeline():
     pipeline = [{"$match": {"region": "Köln"}},
                 {"$unwind": "$skills"},
                 {"$group": {"_id": "$skills", 
+                            "skills_list": {"$addToSet":"$skills"},
                             "count": {"$sum": 1}
                 }},
-                {"$sort": {"count": -1 }},
-                {"$limit": 5}
+                {"$sort": {"_id": 1 }},
+                {"$limit" : 50}
                 ]
     return pipeline
 
@@ -26,8 +27,14 @@ if __name__ == '__main__':
     db = get_db('projectfinder')
     pipeline = make_pipeline()
     result = aggregate(db, pipeline)
-    print("Printing the first result:")
+    #print("Printing the first result:")
+    res = [] 
+    for r in result:
+        a = r["_id"]
+        res.append(a)
+    print(len(res))
+    
     import pprint
-    pprint.pprint(result)
+    pprint.pprint(res)
     
 
