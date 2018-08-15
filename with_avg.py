@@ -46,11 +46,11 @@ def make_pipeline():
     return pipeline
 
 def aggregate(db, pipeline):
-    return [doc for doc in db.cities.aggregate(pipeline)]
+    return [doc for doc in db.itproject2.aggregate(pipeline)]
 
 
 if __name__ == '__main__':
-    db = get_db('examples')
+    db = get_db('projectfinder')
     pipeline = make_pipeline()
     result = aggregate(db, pipeline)
     assert len(result) == 1
